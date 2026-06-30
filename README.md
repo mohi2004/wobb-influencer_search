@@ -1,7 +1,7 @@
 # Wobb Influencer Search — Submission
 
 ## Live Demo
-- If deployed, add the Vercel / Netlify / GitHub Pages URL here.
+Open https://wobb-influencer-search-zeta.vercel.app/ to view the app
 
 ## Overview
 This project is an influencer search interface built with React, TypeScript, Vite, Tailwind CSS, and Zustand. It lets users search influencers by platform, add profiles to a persistent list, and view detailed profile data.
