@@ -55,7 +55,7 @@ export function ProfileCard({
       aria-label={`${displayName} on ${platform} - ${formatFollowers(profile.followers)} followers`}
     >
       <Link to={`/profile/${profileKey}?platform=${platform}`} onClick={handleCardClick} className="block">
-        <div className="flex items-start gap-2.5">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-2.5">
           <div className="relative h-12 w-12 flex-shrink-0">
             <img
               src={profile.picture}
@@ -77,9 +77,9 @@ export function ProfileCard({
               </svg>
             </div>
           </div>
-          <div className="min-w-0 flex-1 text-left">
-            <div className="mb-1 flex flex-wrap items-center gap-1.5">
-              <h3 className="truncate text-sm font-semibold text-[var(--text-h)]">
+          <div className="min-w-0 flex-1 text-center md:text-left">
+            <div className="mb-1 flex flex-wrap items-center justify-center md:justify-start gap-1.5">
+              <h3 className="truncate text-sm font-semibold text-[var(--text-h)] text-center md:text-left">
                 @{displayName}
               </h3>
               <VerifiedBadge verified={profile.is_verified} />
@@ -89,11 +89,11 @@ export function ProfileCard({
                 {platform}
               </span>
             </div>
-            <p className="mb-1 truncate text-xs text-[var(--subtle)]">
+            <p className="mb-1 truncate text-xs text-[var(--subtle)] text-center md:text-left">
               {profile.fullname}
             </p>
 
-            <div className="flex flex-wrap gap-2 text-[11px]">
+            <div className="flex flex-wrap gap-2 text-[11px] justify-center md:justify-start">
               <div className="rounded-full border border-[var(--border)] bg-[var(--surface-alt)] px-2 py-1 font-semibold text-[var(--text-h)]">
                 {formatFollowers(profile.followers)} followers
               </div>
@@ -107,14 +107,14 @@ export function ProfileCard({
         </div>
       </Link>
 
-      <div className="mt-3 flex justify-end">
+      <div className="mt-3 flex justify-center md:justify-end">
         <button
           type="button"
           onClick={handleAdd}
           aria-label={added ? `${displayName} is already in your list` : `Add ${displayName} to your list`}
           aria-pressed={added}
           disabled={added}
-          className={`flex items-center gap-2 rounded-2xl border px-3 py-1 text-[11px] font-semibold transition-all duration-200 ${
+          className={`w-full md:w-auto flex items-center justify-center gap-2 rounded-2xl border px-3 py-1 text-[11px] font-semibold transition-all duration-200 ${
             added
               ? "border-[var(--success)]/30 bg-[var(--success-soft)] text-[var(--success)]"
               : "border-[var(--accent)]/20 bg-[var(--surface-alt)] text-[var(--accent)] hover:bg-[var(--accent-soft)]"

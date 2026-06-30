@@ -12,7 +12,7 @@ export function SelectedList() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 z-40 flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2.5 font-bold text-white shadow-lg shadow-[var(--accent-glow)] transition-all hover:bg-[var(--accent-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-strong)]"
+        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 md:left-auto md:right-4 md:transform-none z-40 flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2.5 font-bold text-white shadow-lg shadow-[var(--accent-glow)] transition-all hover:bg-[var(--accent-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-strong)]"
         aria-label={`Open selected list with ${profiles.length} ${profiles.length === 1 ? 'item' : 'items'}`}
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -33,11 +33,12 @@ export function SelectedList() {
         />
       )}
 
-      {/* Sidebar panel */}
+      {/* Panel: bottom-sheet on mobile, right-sidebar on desktop */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-sm border-l border-[var(--border)] bg-[var(--surface)] shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-          isOpen ? "translate-x-0 animate-slide-in-down" : "translate-x-full"
-        }`}
+        className={`fixed z-50 transform transition-transform duration-300 ease-in-out flex flex-col bg-[var(--surface)] shadow-2xl border-[var(--border)] ${
+          // mobile: full width bottom sheet; desktop (md+): right sidebar
+          "left-0 bottom-0 w-full max-h-[80vh] rounded-t-2xl border-t md:top-0 md:right-0 md:left-auto md:h-full md:w-full md:max-w-sm md:rounded-none md:border-t-0 md:border-l"
+        } ${isOpen ? "translate-y-0 md:translate-x-0" : "translate-y-full md:translate-x-full"}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="selected-list-title"

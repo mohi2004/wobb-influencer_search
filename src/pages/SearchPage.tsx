@@ -62,10 +62,35 @@ export function SearchPage() {
     const prevBodyOverflow = document.body.style.overflow;
     const prevHtmlOverflow = document.documentElement.style.overflow;
 
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
+    // Lock scroll only on desktop (min-width: 1024px). Keep scrolling on smaller viewports.
+    const mq = window.matchMedia("(min-width: 1024px)");
+
+    const apply = (shouldLock: boolean) => {
+      document.body.style.overflow = shouldLock ? "hidden" : prevBodyOverflow;
+      document.documentElement.style.overflow = shouldLock ? "hidden" : prevHtmlOverflow;
+    };
+
+    // Initial apply
+    apply(mq.matches);
+
+    // Listen for viewport changes and update accordingly
+    const handleChange = (ev: MediaQueryListEvent) => apply(ev.matches);
+    // use addEventListener when available
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", handleChange);
+    } else {
+      // fallback for older browsers
+      // @ts-ignore
+      mq.addListener(handleChange);
+    }
 
     return () => {
+      if (typeof mq.removeEventListener === "function") {
+        mq.removeEventListener("change", handleChange);
+      } else {
+        // @ts-ignore
+        mq.removeListener(handleChange);
+      }
       document.body.style.overflow = prevBodyOverflow;
       document.documentElement.style.overflow = prevHtmlOverflow;
     };
@@ -73,7 +98,7 @@ export function SearchPage() {
 
   return (
     <Layout>
-      <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)] h-[calc(100vh-120px)]">
+      <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)] h-auto xl:h-[calc(100vh-120px)]">
         <aside className="space-y-6 xl:sticky xl:top-28 xl:self-start">
           <div className="rounded-[2rem] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)]">
             <div className="flex items-center justify-between gap-4 mb-4">
